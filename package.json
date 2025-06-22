@@ -1,0 +1,25 @@
+{
+  "name": "majorwebdevproject",
+  "version": "1.0.0",
+  "description": "An attempt to deploy an end-to-end fully functional website as a major project.",
+  "homepage": "https://github.com/himanshu-warulkar/rentmyride#readme",
+  "bugs": {
+    "url": "https://github.com/himanshu-warulkar/rentmyride/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himanshu-warulkar/rentmyride.git"
+  },
+  "license": "ISC",
+  "author": "himanshu-warulkar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.0"
+  }
+}
