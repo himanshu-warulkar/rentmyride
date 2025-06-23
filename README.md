@@ -13,3 +13,10 @@ A peer-to-peer vehicle rental platform inspired by Airbnb's model, built using t
 
 ## create new listing
 ![image](https://github.com/user-attachments/assets/4784c2ad-753f-468f-85cc-20e7779eedde)
+
+## HomePage V1
+![image](https://github.com/user-attachments/assets/a6275b3a-4656-48cf-9826-92cd8ba9ba53)
+
+## Updated New Listing Page 
+![image](https://github.com/user-attachments/assets/2f2f66a4-4b76-4868-8db2-989e390feae6)
+
