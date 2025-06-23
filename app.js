@@ -19,6 +19,7 @@ async function main() {
 
 app.set('view engine', 'ejs');
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
 // Root route
 app.get('/', (req, res) => {
@@ -59,5 +60,26 @@ app.get('/listings', async (req, res) => {
     await Listing.deleteMany({ title: "Test Vehicle" });
     res.render("listings/index.ejs", { allListings });
 });
+
+//new route
+app.get('/listings/new', (req, res) => {
+  res.render("listings/new.ejs");
+});
+
+//show route
+app.get('/listings/:id', async (req, res) => {
+  const { id } = req.params; // Correctly access the id from req.params
+  try {
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return res.status(404).send("Listing not found");
+    }
+    res.render("listings/show.ejs", { listing });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error.");
+  }
+});
+
 
 

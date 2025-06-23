@@ -7,11 +7,26 @@
 </head>
 <body>
     <h1>Available Listings</h1>
+    <form method="GET" action="/listings">
+        <button type="button" onclick="window.location.href='/listings'">View All Listings</button>
+        <button type="button" onclick="window.location.href='/listings/my-listings'">My Listings</button>
+        <button type="button" onclick="window.location.href='/listings/new'">Create New Listing</button>
+        <button type="button" onclick="window.location.href='/listings/search'">Search Listings</button>
+        <button type="button" onclick="window.location.href='/listings/filter'">Filter Listings</button>
+        <button type="button" onclick="window.location.href='/listings/sort'">Sort Listings</button>
+        <button type="button" onclick="window.location.href='/listings/nearby'">Find Nearby Listings</button>
+        <button type="button" onclick="window.location.href='/listings/featured'">View Featured Listings</button>
+        <button type="button" onclick="window.location.href='/listings/most-viewed'">Most Viewed Listings</button>
+        <button type="button" onclick="window.location.href='/listings/recent'">Recently Added Listings</button>
+        <button type="button" onclick="window.location.href='/listings/most-popular'">Most Popular Listings</button>
+        <button type="button" onclick="window.location.href='/listings/most-reviewed'">Most Reviewed Listings</button>
+        <button type="button" onclick="window.location.href='/listings/most-rated'">Most Rated Listings</button>
+    </form>
     <ul>
         <% for(let listing of allListings) { %>
             <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
             <li><img src="<%= listing.image %>" alt="<%= listing.title %>" style="width: 200px; height: auto;"></li>
-            <li>Price: $<%= listing.price %></li>
+            <li>Price: &#8377;<%= listing.price %></li>
             <li>Description: <%= listing.description %></li>
         <% } %>
     </ul>      

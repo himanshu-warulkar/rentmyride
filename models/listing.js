@@ -6,6 +6,29 @@ const listingSchema = new mongoose.Schema({
     image: { type: String, required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
+    location: { type: String, required: true },
+    cubicCapacity: { type: Number, required: true },
+    fuelType: { type: String, enum: ['Petrol', 'Diesel', 'Electric', 'Hybrid'], required: true },
+    transmission: { type: String, enum: ['Manual', 'Automatic'], required: true },
+    seats: { type: Number, required: true, min: 1, max: 9 }, // Assuming a maximum of 9 seats
+    mileage: { type: Number, required: true, min: 0 }, // Mileage cannot be negative
+    availability: { type: Boolean, default: true }, // Listing is available
+    reviews: [{
+        user: { type: Schema.Types.ObjectId, ref: 'User', required: false },
+        rating: { type: Number, required: false, min: 1, max: 5 }, // Rating between 1 and 5
+        comment: { type: String, required: true, maxlength: 500 }, // Limit comment length
+        createdAt: { type: Date, default: Date.now }
+    }],
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: false }, // Owner is not required for the listing to be created
+    fuelEfficiency: { type: Number, required: true, min: 0 }, // Fuel efficiency cannot be negative
+    coordinates: {
+        type: { type: String,
+        enum: ['Point'],
+        required: true },
+        coordinates: { type: [Number], required: true } // [longitude, latitude]
+    }
 });
 
 module.exports = mongoose.model('Listing', listingSchema);
