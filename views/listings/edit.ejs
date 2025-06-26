@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Listing | Rent My Ride</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://img.icons8.com/?size=512&id=61991&format=png" />
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+  
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-c4c8-6246-9247-67bb23618e3f/raw?se=2025-06-23T10%3A56%3A46Z&sp=r&sv=2024-08-04&sr=b&scid=185cbc6f-eb77-5f39-be5b-d8edb75d5e1c&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-22T15%3A27%3A47Z&ske=2025-06-23T15%3A27%3A47Z&sks=b&skv=2024-08-04&sig=jQwsHD9JGry/n0bVBdc6Kbj2ygL2WFOMF7FotGGf8IA%3D" class="h-10 w-auto" alt="Logo" />
+        <h1 class="text-xl font-bold text-blue-600">Rent My Ride</h1>
+      </div>
+      <nav class="space-x-2">
+        <button onclick="window.location.href='/listings'" class="btn-primary">All</button>
+        <button onclick="window.location.href='/listings/my-listings'" class="btn-primary">My Listings</button>
+        <button onclick="window.location.href='/listings/new'" class="btn-green">Create</button>
+        <button onclick="window.location.href='/listings'" class="btn-purple">Back</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 py-10">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-2xl font-semibold mb-6 text-blue-600">Edit Your Listing</h2>
+      <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="space-y-4">
+        <input type="hidden" name="_id" value="<%= listing._id %>">
+
+        <div>
+          <label class="form-label">Title</label>
+          <input type="text" name="listing[title]" value="<%= listing.title %>" required class="form-input">
+        </div>
+
+        <div>
+          <label class="form-label">Description</label>
+          <textarea name="listing[description]" required class="form-textarea"><%= listing.description %></textarea>
+        </div>
+
+        <div>
+          <label class="form-label">Price (₹)</label>
+          <input type="number" name="listing[price]" value="<%= listing.price %>" required class="form-input">
+        </div>
+
+        <div class="flex justify-between">
+          <button type="submit" class="btn-blue">Update Listing</button>
+          <a href="/listings/<%= listing._id %>" class="text-sm text-blue-600 hover:underline self-center">View Listing</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Review Section -->
+    <div class="bg-white mt-10 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold text-green-600 mb-4">Add a Review</h2>
+      <form action="/listings/<%= listing._id %>/reviews" method="POST" class="space-y-4">
+        <input type="text" name="listing[author]" placeholder="Your Name" required class="form-input">
+        <textarea name="listing[comment]" placeholder="Your Review" required class="form-textarea"></textarea>
+        <input type="number" name="listing[rating]" placeholder="Rating (1-5)" min="1" max="5" required class="form-input">
+        <button type="submit" class="btn-green">Submit Review</button>
+      </form>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="bg-white mt-10 rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold text-indigo-600 mb-4">Contact Owner</h2>
+      <form action="/listings/<%= listing._id %>/contact" method="POST" class="space-y-4">
+        <textarea name="listing[message]" placeholder="Your message to the owner" required class="form-textarea"></textarea>
+        <button type="submit" class="btn-purple">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="bg-white mt-10 rounded-lg shadow p-6 border border-red-200">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Danger Zone</h2>
+      <form action="/listings/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this listing?');">
+        <input type="hidden" name="listing[_id]" value="<%= listing._id %>">
+        <button type="submit" class="btn-red">Delete Listing</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-sm text-gray-500 py-6">
+    &copy; <%= new Date().getFullYear() %> RentMyRide. All rights reserved.
+  </footer>
+
+  <!-- Tailwind Utility Classes -->
+  <style>
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #4B5563;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 0.375rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .form-input:focus {
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    .form-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 0.375rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .form-textarea:focus {
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    .btn-primary {
+      @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded;
+    }
+    .btn-blue {
+      @apply bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded font-medium;
+    }
+    .btn-green {
+      @apply bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded font-medium;
+    }
+    .btn-purple {
+      @apply bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded font-medium;
+    }
+    .btn-red {
+      @apply bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded font-medium;
+    }
+  </style>
+</body>
+</html>

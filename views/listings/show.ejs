@@ -1,66 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rent My Ride - Listing Details</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rent My Ride - <%= listing.title %></title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1><%= listing.title %></h1>
-    <img src="<%= listing.image %>" alt="<%= listing.title %>" style="width: 400px; height: auto;">
-    <p>Price: &#8377; <%= listing.price %></p>
-    <p>Description: <%= listing.description %></p>
-    <p>Location: <%= listing.location %></p>
-    <p>Contact: <%= listing.contact %></p>
-    <p>Mileage: <%= listing.mileage %> miles</p>
-    <p>Year: <%= listing.year %></p>
-    <p>Condition: <%= listing.condition %></p>
-    <p>Fuel Type: <%= listing.fuelType %></p>
-    <p>Transmission: <%= listing.transmission %></p>
-    <p>Seats: <%= listing.seats %></p>
-    <p>Cubic Capacity: <%= listing.cubicCapacity %></p>
-    <p>Posted on: <%= listing.createdAt.toLocaleDateString() %></p>
-    <p>Last updated: <%= listing.updatedAt.toLocaleDateString() %></p>
-    <h2>Reviews</h2>
-    <ul>
-        <% if (listing.reviews && listing.reviews.length > 0) { %>
-            <% listing.reviews.forEach(review => { %>
-                <li>
-                    <strong><%= review.author %>:</strong> <%= review.comment %>
-                    <em>Rating: <%= review.rating %>/5</em>
-                </li>
-            <% }); %>
-        <% } else { %>
-            <li>No reviews yet.</li>
-        <% } %>
-    </ul>
-    <h2>Add a Review</h2>
-    <form action="/listings/<%= listing._id %>/reviews" method="POST">
-        <label for="author">Your Name:</label>
-        <input type="text" id="author" name="author" required>
-        <label for="comment">Your Review:</label>
-        <textarea id="comment" name="comment" required></textarea>
-        <label for="rating">Rating (1-5):</label>
-        <input type="number" id="rating" name="rating" min="1" max="5" required>
-        <button type="submit">Submit Review</button>
-    </form>
-    <hr>
-    <h2>Contact the Owner</h2>
-    <form action="/listings/<%= listing._id %>/contact" method="POST">
-        <label for="message">Your Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit">Send Message</button>
-    </form>
-    <hr>
-    <h2>Actions</h2>
-    <a href="/listings/<%= listing._id %>/edit">Edit Listing</a>
-    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" style="display:inline;">
-        <button type="submit">Delete Listing</button>
-    </form>
-    <hr>
-    <a href="/listings">Back to Listings</a>
-    <footer>
-        <p>&copy; 2023 Rent My Ride. All rights reserved.</p>
-    </footer>
-</body> 
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-c4c8-6246-9247-67bb23618e3f/raw?se=2025-06-23T10%3A56%3A46Z&sp=r&sv=2024-08-04&sr=b&scid=185cbc6f-eb77-5f39-be5b-d8edb75d5e1c&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-22T15%3A27%3A47Z&ske=2025-06-23T15%3A27%3A47Z&sks=b&skv=2024-08-04&sig=jQwsHD9JGry/n0bVBdc6Kbj2ygL2WFOMF7FotGGf8IA%3D" alt="Rent My Ride Logo" class="h-10 w-auto">
+        <h1 class="text-xl font-bold text-blue-600">Rent My Ride</h1>
+      </div>
+      <nav class="space-x-2">
+        <button onclick="location.href='/listings'" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">All</button>
+        <button onclick="location.href='/listings/new'" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Create</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Listing -->
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <img src="<%= listing.image %>" alt="<%= listing.title %>" class="w-full h-80 object-cover">
+      <div class="p-6">
+        <h2 class="text-3xl font-bold text-blue-700 mb-2"><%= listing.title %></h2>
+        <p class="text-lg text-gray-700 mb-4"><%= listing.description %></p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-600">
+          <p><strong>Price:</strong> ₹<%= listing.price %></p>
+          <p><strong>Location:</strong> <%= listing.location %></p>
+          <p><strong>Mileage:</strong> <%= listing.mileage %> km</p>
+          <p><strong>Cubic Capacity:</strong> <%= listing.cubicCapacity %> cc</p>
+          <p><strong>Fuel Type:</strong> <%= listing.fuelType %></p>
+          <p><strong>Transmission:</strong> <%= listing.transmission %></p>
+          <p><strong>Seats:</strong> <%= listing.seats %></p>
+          <p><strong>Condition:</strong> <%= listing.condition %></p>
+          <p><strong>Contact:</strong> <%= listing.contact %></p>
+          <p><strong>Year:</strong> <%= listing.year %></p>
+          <p><strong>Posted:</strong> <%= listing.createdAt.toLocaleDateString() %></p>
+          <p><strong>Updated:</strong> <%= listing.updatedAt.toLocaleDateString() %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <section class="bg-white shadow mt-10 rounded-lg p-6">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Reviews</h3>
+      <% if (listing.reviews && listing.reviews.length > 0) { %>
+        <ul class="space-y-3">
+          <% listing.reviews.forEach(review => { %>
+            <li class="border-b pb-3">
+              <p class="font-semibold text-blue-700"><%= review.author %></p>
+              <p class="text-gray-700"><%= review.comment %></p>
+              <p class="text-yellow-500 font-medium">Rating: <%= review.rating %>/5</p>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-500">No reviews yet.</p>
+      <% } %>
+    </section>
+
+    <!-- Add Review -->
+    <section class="bg-white shadow mt-10 rounded-lg p-6">
+      <h3 class="text-xl font-semibold text-green-700 mb-4">Add a Review</h3>
+      <form action="/listings/<%= listing._id %>/reviews" method="POST" class="space-y-4">
+        <input type="text" name="author" placeholder="Your Name" required class="form-input w-full">
+        <textarea name="comment" placeholder="Your Review" required class="form-textarea w-full"></textarea>
+        <input type="number" name="rating" min="1" max="5" placeholder="Rating (1–5)" required class="form-input w-full">
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Submit Review</button>
+      </form>
+    </section>
+
+    <!-- Contact Owner -->
+    <section class="bg-white shadow mt-10 rounded-lg p-6">
+      <h3 class="text-xl font-semibold text-indigo-700 mb-4">Contact the Owner</h3>
+      <form action="/listings/<%= listing._id %>/contact" method="POST" class="space-y-4">
+        <textarea name="message" placeholder="Your message" required class="form-textarea w-full"></textarea>
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Send Message</button>
+      </form>
+    </section>
+
+    <!-- Actions -->
+    <section class="mt-10 text-sm text-center">
+      <a href="/listings/<%= listing._id %>/edit" class="text-blue-600 hover:underline font-medium mr-4">Edit Listing</a>
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="inline">
+        <button type="submit" class="text-red-600 hover:underline font-medium">Delete Listing</button>
+      </form>
+      <p class="mt-4"><a href="/listings" class="text-gray-600 hover:underline">← Back to Listings</a></p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-500 mt-10">
+    &copy; <%= new Date().getFullYear() %> Rent My Ride. All rights reserved.
+  </footer>
+</body>
 </html>

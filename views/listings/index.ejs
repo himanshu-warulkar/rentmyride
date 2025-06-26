@@ -1,35 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">    
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rent My Ride - Listings</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent My Ride - Listings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css">
 </head>
-<body>
-    <h1>Available Listings</h1>
-    <form method="GET" action="/listings">
-        <button type="button" onclick="window.location.href='/listings'">View All Listings</button>
-        <button type="button" onclick="window.location.href='/listings/my-listings'">My Listings</button>
-        <button type="button" onclick="window.location.href='/listings/new'">Create New Listing</button>
-        <button type="button" onclick="window.location.href='/listings/search'">Search Listings</button>
-        <button type="button" onclick="window.location.href='/listings/filter'">Filter Listings</button>
-        <button type="button" onclick="window.location.href='/listings/sort'">Sort Listings</button>
-        <button type="button" onclick="window.location.href='/listings/nearby'">Find Nearby Listings</button>
-        <button type="button" onclick="window.location.href='/listings/featured'">View Featured Listings</button>
-        <button type="button" onclick="window.location.href='/listings/most-viewed'">Most Viewed Listings</button>
-        <button type="button" onclick="window.location.href='/listings/recent'">Recently Added Listings</button>
-        <button type="button" onclick="window.location.href='/listings/most-popular'">Most Popular Listings</button>
-        <button type="button" onclick="window.location.href='/listings/most-reviewed'">Most Reviewed Listings</button>
-        <button type="button" onclick="window.location.href='/listings/most-rated'">Most Rated Listings</button>
-    </form>
-    <ul>
-        <% for(let listing of allListings) { %>
-            <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
-            <li><img src="<%= listing.image %>" alt="<%= listing.title %>" style="width: 200px; height: auto;"></li>
-            <li>Price: &#8377;<%= listing.price %></li>
-            <li>Description: <%= listing.description %></li>
-        <% } %>
-    </ul>      
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <img src="https://sdmntpritalynorth.oaiusercontent.com/files/00000000-c4c8-6246-9247-67bb23618e3f/raw?se=2025-06-23T10%3A56%3A46Z&sp=r&sv=2024-08-04&sr=b&scid=185cbc6f-eb77-5f39-be5b-d8edb75d5e1c&skoid=f28c0102-4d9d-4950-baf0-4a8e5f6cf9d4&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-22T15%3A27%3A47Z&ske=2025-06-23T15%3A27%3A47Z&sks=b&skv=2024-08-04&sig=jQwsHD9JGry/n0bVBdc6Kbj2ygL2WFOMF7FotGGf8IA%3D" alt="Rent My Ride Logo" class="h-10 w-auto" sizes="(max-width: 640px) 100vw, 640px">
+      <h1>Rent My Ride</h1>
+      <div class="space-x-2">
+        <button onclick="window.location.href='/listings'" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">All</button>
+        <button onclick="window.location.href='/listings/my-listings'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">My Listings</button>
+        <button onclick="window.location.href='/listings/new'" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Create</button>
+        <button onclick="window.location.href='/listings/search'" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="window.location.href='/listings/filter'" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">Filter</button>
+        <button onclick="window.location.href='/listings/sort'" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">Sort</button>
+        <button onclick="window.location.href='/listings/nearby'" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded">Nearby</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Available Listings</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% for(let listing of allListings) { %>
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+          <img src="<%= listing.image %>" alt="<%= listing.title %>" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="text-xl font-bold text-gray-800 mb-2"><%= listing.title %></h3>
+            <p class="text-sm text-gray-600 mb-2"><%= listing.description %></p>
+            <p class="text-lg font-semibold text-blue-600">&#8377;<%= listing.price %></p>
+            <a href="/listings/<%= listing._id %>" class="inline-block mt-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+              View Details
+            </a>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <footer class="text-center py-6 text-sm text-gray-500">
+    &copy; <%= new Date().getFullYear() %> RentMyRide. All rights reserved.
+  </footer>
+
 </body>
 </html>
-

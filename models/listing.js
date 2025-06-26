@@ -23,13 +23,9 @@ const listingSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now },
     owner: { type: Schema.Types.ObjectId, ref: 'User', required: false }, // Owner is not required for the listing to be created
     fuelEfficiency: { type: Number, required: true, min: 0 }, // Fuel efficiency cannot be negative
-    coordinates: {
-        type: { type: String,
-        enum: ['Point'],
-        required: true },
-        coordinates: { type: [Number], required: true } // [longitude, latitude]
-    }
 });
+/*seats: { type: Number, required: true, min: 1, max: 9 }, // Assuming a maximum of 9 seats
+mileage: { type: Number, required: true, min: 0 }, // Mileage*/
 
 module.exports = mongoose.model('Listing', listingSchema);
 
