@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sort Listings - Rent My Ride</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <img src="data:image/jpeg;base64,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" alt="Rent My Ride Logo" class="h-10 w-auto">
+      <h1 class="text-xl font-bold text-red-600">Rent My Ride</h1>
+      <div class="space-x-2">
+        <button onclick="window.location.href='/listings'" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">All</button>
+        <button onclick="window.location.href='/listings/my-listings'" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">My Listings</button>
+        <button onclick="window.location.href='/listings/new'" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Create</button>
+        <button onclick="window.location.href='/listings/search'" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="window.location.href='/listings/filter'" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">Filter</button>
+        <button onclick="window.location.href='/listings/sort'" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">Sort</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Sort Listings</h2>
+    
+    <!-- Sort Form -->
+    <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+      <form method="GET" action="/listings/sort" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Sort By -->
+          <div>
+            <label for="sortBy" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+            <select id="sortBy" name="sortBy" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+              <option value="createdAt" <%= sortParams && sortParams.sortBy ? sortParams.sortBy : '' === 'createdAt' || !sortParams && sortParams.sortBy ? sortParams.sortBy : '' ? 'selected' : '' %>>Date Created</option>
+              <option value="price" <%= sortParams && sortParams.sortBy ? sortParams.sortBy : '' === 'price' ? 'selected' : '' %>>Price</option>
+              <option value="title" <%= sortParams && sortParams.sortBy ? sortParams.sortBy : '' === 'title' ? 'selected' : '' %>>Title (A-Z)</option>
+              <option value="seats" <%= sortParams && sortParams.sortBy ? sortParams.sortBy : '' === 'seats' ? 'selected' : '' %>>Number of Seats</option>
+              <option value="mileage" <%= sortParams && sortParams.sortBy ? sortParams.sortBy : '' === 'mileage' ? 'selected' : '' %>>Mileage</option>
+            </select>
+          </div>
+
+          <!-- Sort Order -->
+          <div>
+            <label for="order" class="block text-sm font-medium text-gray-700 mb-1">Sort Order</label>
+            <select id="order" name="order" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500">
+              <option value="desc" <%= sortParams && sortParams.order ? sortParams.order : '' === 'desc' || !sortParams && sortParams.order ? sortParams.order : '' ? 'selected' : '' %>>Descending (High to Low)</option>
+              <option value="asc" <%= sortParams && sortParams.order ? sortParams.order : '' === 'asc' ? 'selected' : '' %>>Ascending (Low to High)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-center space-x-4 pt-4">
+          <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded-md font-medium">
+            <i class="fas fa-sort mr-2"></i>Apply Sort
+          </button>
+          <a href="/listings/sort" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-md font-medium">
+            <i class="fas fa-times mr-2"></i>Reset
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Current Sort Info -->
+    <% if (sortParams && (sortParams.sortBy || sortParams.order)) { %>
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+        <div class="flex items-center">
+          <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+          <span class="text-sm text-yellow-800">
+            Sorted by: 
+            <strong>
+              <%= sortParams.sortBy === 'createdAt' ? 'Date Created' : 
+                  sortParams.sortBy === 'price' ? 'Price' : 
+                  sortParams.sortBy === 'title' ? 'Title' : 
+                  sortParams.sortBy === 'seats' ? 'Number of Seats' : 
+                  sortParams.sortBy === 'mileage' ? 'Mileage' : 'Date Created' %>
+            </strong>
+            (<%= sortParams.order === 'asc' ? 'Low to High' : 'High to Low' %>)
+          </span>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Sorted Results -->
+    <% if (allListings && allListings.length > 0) { %>
+      <div class="mb-4">
+        <h3 class="text-xl font-semibold text-gray-800">All Listings (<%= allListings.length %> total)</h3>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% for(let listing of allListings) { %>
+          <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="<%= listing.image %>" alt="<%= listing.title %>" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-gray-800 mb-2"><%= listing.title %></h3>
+              <p class="text-sm text-gray-600 mb-2"><%= listing.description %></p>
+              <div class="flex justify-between items-center mb-2">
+                <p class="text-lg font-semibold text-blue-600">&#8377;<%= listing.price %></p>
+                <% if (listing.seats) { %>
+                  <span class="text-sm text-gray-500"><i class="fas fa-users mr-1"></i><%= listing.seats %> seats</span>
+                <% } %>
+              </div>
+              <% if (listing.fuelType || listing.transmission) { %>
+                <div class="flex justify-between text-sm text-gray-500 mb-2">
+                  <% if (listing.fuelType) { %>
+                    <span><i class="fas fa-gas-pump mr-1"></i><%= listing.fuelType %></span>
+                  <% } %>
+                  <% if (listing.transmission) { %>
+                    <span><i class="fas fa-cogs mr-1"></i><%= listing.transmission %></span>
+                  <% } %>
+                </div>
+              <% } %>
+              <% if (listing.mileage) { %>
+                <p class="text-sm text-gray-500 mb-2"><i class="fas fa-tachometer-alt mr-1"></i><%= listing.mileage %> km/l</p>
+              <% } %>
+              <% if (listing.createdAt) { %>
+                <p class="text-xs text-gray-400 mb-3">
+                  <i class="fas fa-calendar mr-1"></i>
+                  Listed: <%= new Date(listing.createdAt).toLocaleDateString() %>
+                </p>
+              <% } %>
+              <a href="/listings/<%= listing._id %>" class="inline-block w-full text-center text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+                View Details
+              </a>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="text-center py-8">
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <i class="fas fa-list text-gray-400 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">No Listings Available</h3>
+          <p class="text-gray-600">There are currently no listings to display.</p>
+        </div>
+      </div>
+    <% } %>
+  </main>
+
+  <footer class="text-center py-6 text-sm text-gray-500">
+    &copy; <%= new Date().getFullYear() %> RentMyRide. All rights reserved.
+  </footer>
+
+</body>
+</html>

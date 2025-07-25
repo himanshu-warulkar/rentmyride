@@ -70,6 +70,172 @@ app.get('/listings/new', (req, res) => {
   res.render("listings/new.ejs");
 });
 
+// Search route - GET request to show search form
+app.get('/listings/search', async (req, res) => {
+  try {
+    console.log('Search route accessed with query:', req.query);
+    const { q, location, minPrice, maxPrice, fuelType, transmission, vehicleType, seats } = req.query;
+
+    let query = {};
+    let allListings = [];
+
+    // If there are search parameters, perform the search
+    if (q || location || minPrice || maxPrice || fuelType || transmission || vehicleType || seats) {
+      // Text search in title and description
+      if (q) {
+        query.$or = [
+          { title: { $regex: q, $options: 'i' } },
+          { description: { $regex: q, $options: 'i' } }
+        ];
+      }
+
+      // Location search
+      if (location) {
+        query.location = { $regex: location, $options: 'i' };
+      }
+
+      // Price range filter
+      if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice) query.price.$gte = parseFloat(minPrice);
+        if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+      }
+
+      // Fuel type filter
+      if (fuelType && fuelType !== 'all') {
+        query.fuelType = fuelType;
+      }
+
+      // Transmission filter
+      if (transmission && transmission !== 'all') {
+        query.transmission = transmission;
+      }
+
+      // Vehicle type filter
+      if (vehicleType && vehicleType !== 'all') {
+        query.vehicleType = vehicleType;
+      }
+
+      // Seats filter
+      if (seats && seats !== 'all') {
+        query.seats = parseInt(seats);
+      }
+
+      allListings = await Listing.find(query);
+    }
+
+    res.render("listings/search.ejs", {
+      allListings: allListings || [],
+      searchParams: req.query || {}
+    });
+  } catch (err) {
+    console.error('Search route error:', err);
+    res.status(500).send("Server error.");
+  }
+});
+
+// Filter route - GET request to show filter form
+app.get('/listings/filter', async (req, res) => {
+  try {
+    const { fuelType, transmission, vehicleType, minPrice, maxPrice, seats, availability } = req.query;
+
+    let query = {};
+    let allListings = [];
+
+    // If there are filter parameters, perform the filtering
+    if (fuelType || transmission || vehicleType || minPrice || maxPrice || seats || availability) {
+      // Fuel type filter
+      if (fuelType && fuelType !== 'all') {
+        query.fuelType = fuelType;
+      }
+
+      // Transmission filter
+      if (transmission && transmission !== 'all') {
+        query.transmission = transmission;
+      }
+
+      // Vehicle type filter
+      if (vehicleType && vehicleType !== 'all') {
+        query.vehicleType = vehicleType;
+      }
+
+      // Price range filter
+      if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice) query.price.$gte = parseFloat(minPrice);
+        if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+      }
+
+      // Seats filter
+      if (seats && seats !== 'all') {
+        query.seats = parseInt(seats);
+      }
+
+      // Availability filter
+      if (availability && availability !== 'all') {
+        query.availability = availability === 'true';
+      }
+
+      allListings = await Listing.find(query);
+    }
+
+    res.render("listings/filter.ejs", {
+      allListings: allListings || [],
+      filterParams: req.query || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error.");
+  }
+});
+
+// Sort route - GET request to show sorted listings
+app.get('/listings/sort', async (req, res) => {
+  try {
+    const { sortBy, order } = req.query;
+
+    let allListings = [];
+    let sortOptions = {};
+
+    // Default sort by creation date (newest first)
+    if (!sortBy) {
+      sortOptions = { createdAt: -1 };
+    } else {
+      const sortOrder = order === 'asc' ? 1 : -1;
+
+      switch (sortBy) {
+        case 'price':
+          sortOptions = { price: sortOrder };
+          break;
+        case 'title':
+          sortOptions = { title: sortOrder };
+          break;
+        case 'createdAt':
+          sortOptions = { createdAt: sortOrder };
+          break;
+        case 'seats':
+          sortOptions = { seats: sortOrder };
+          break;
+        case 'mileage':
+          sortOptions = { mileage: sortOrder };
+          break;
+        default:
+          sortOptions = { createdAt: -1 };
+      }
+    }
+
+    allListings = await Listing.find({}).sort(sortOptions);
+
+    res.render("listings/sort.ejs", {
+      allListings: allListings || [],
+      sortParams: req.query || {}
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error.");
+  }
+});
+
 //show route
 app.get('/listings/:id', async (req, res) => {
   const { id } = req.params; // Correctly access the id from req.params
@@ -133,17 +299,117 @@ app.delete('/listings/:id', async (req, res) => {
     if (!deletedListing) {
       return res.status(404).send("Listing not found");
     }
-    res.redirect('/listings');  
+    res.redirect('/listings');
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error.");  
+    res.status(500).send("Server error.");
+  }
+});
+
+
+
+// Combined search, filter, and sort route
+app.get('/listings/advanced', async (req, res) => {
+  try {
+    const {
+      q, location, minPrice, maxPrice, fuelType, transmission,
+      vehicleType, seats, availability, sortBy, order
+    } = req.query;
+
+    let query = {};
+    let sortOptions = {};
+
+    // Build search query
+    if (q || location || minPrice || maxPrice || fuelType || transmission || vehicleType || seats || availability) {
+      // Text search in title and description
+      if (q) {
+        query.$or = [
+          { title: { $regex: q, $options: 'i' } },
+          { description: { $regex: q, $options: 'i' } }
+        ];
+      }
+
+      // Location search
+      if (location) {
+        query.location = { $regex: location, $options: 'i' };
+      }
+
+      // Price range filter
+      if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice) query.price.$gte = parseFloat(minPrice);
+        if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+      }
+
+      // Fuel type filter
+      if (fuelType && fuelType !== 'all') {
+        query.fuelType = fuelType;
+      }
+
+      // Transmission filter
+      if (transmission && transmission !== 'all') {
+        query.transmission = transmission;
+      }
+
+      // Vehicle type filter
+      if (vehicleType && vehicleType !== 'all') {
+        query.vehicleType = vehicleType;
+      }
+
+      // Seats filter
+      if (seats && seats !== 'all') {
+        query.seats = parseInt(seats);
+      }
+
+      // Availability filter
+      if (availability && availability !== 'all') {
+        query.availability = availability === 'true';
+      }
+    }
+
+    // Build sort options
+    if (!sortBy) {
+      sortOptions = { createdAt: -1 };
+    } else {
+      const sortOrder = order === 'asc' ? 1 : -1;
+
+      switch (sortBy) {
+        case 'price':
+          sortOptions = { price: sortOrder };
+          break;
+        case 'title':
+          sortOptions = { title: sortOrder };
+          break;
+        case 'createdAt':
+          sortOptions = { createdAt: sortOrder };
+          break;
+        case 'seats':
+          sortOptions = { seats: sortOrder };
+          break;
+        case 'mileage':
+          sortOptions = { mileage: sortOrder };
+          break;
+        default:
+          sortOptions = { createdAt: -1 };
+      }
+    }
+
+    const allListings = await Listing.find(query).sort(sortOptions);
+
+    res.render("listings/advanced.ejs", {
+      allListings,
+      searchParams: req.query
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error.");
   }
 });
 
 // 404 route
 app.use((req, res) => {
   res.status(404).send("Page not found");
-}); 
+});
 
 // Review route
 app.post('/listings/:id/reviews', async (req, res) => {
