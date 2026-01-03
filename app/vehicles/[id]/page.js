@@ -1,7 +1,7 @@
 import { vehicles } from "@/lib/data";
 
 export default function VehicleDetails({ params }) {
-  const vehicle = vehicles.find((v) => v.id === params.id);
+  const vehicle = vehicles.find((v) => v.id === Number(params.id));
 
   if (!vehicle) {
     return (
