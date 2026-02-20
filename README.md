@@ -60,3 +60,16 @@ lib/
 └── data.js                 # Mock vehicle data
 components/
 └── Navbar.js               # Navigation bar
+
+
+## THe Main Page:
+<img width="1919" height="998" alt="image" src="https://github.com/user-attachments/assets/ce04a07d-f7f9-4bfc-88d9-3f7a110cd5d1" />
+
+## The Login Page:
+<img width="1920" height="1003" alt="image" src="https://github.com/user-attachments/assets/e258ac10-2d98-49d4-b285-f5ac634c5fc3" />
+
+
+## The Vehicle Page:
+<img width="1920" height="999" alt="image" src="https://github.com/user-attachments/assets/80d61249-5278-4353-b9fc-a49389f1b58a" />
+
+
