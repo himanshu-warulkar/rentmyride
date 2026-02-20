@@ -9,43 +9,67 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await signIn("credentials", {
+    const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
-    if (result?.error) {
-      alert("Invalid credentials");
+    if (res?.error) {
+      setError("Invalid email or password");
     } else {
-      router.push("/vehicles");
+      router.push("/");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow w-96"
-      >
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Login
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white px-4">
+      <div className="w-full max-w-md bg-slate-900 p-8 rounded-xl shadow-lg border border-slate-800">
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full mb-4 px-4 py-2 border rounded"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Login to RentMyRide
+        </h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+        {error && (
+          <p className="text-red-500 text-sm mb-4 text-center">
+            {error}
+          </p>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg font-medium"
+          >
+            Login
+          </button>
+
+        </form>
+      </div>
+    </div>
+  );
+}
