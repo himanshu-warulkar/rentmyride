@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const router = useRouter();
 
-  //here i am supposed to add the email state right 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,10 +46,6 @@ export default function LoginPage() {
             {error}
           </p>
         )}
-
-
-
-
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
