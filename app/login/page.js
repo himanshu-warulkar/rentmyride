@@ -60,6 +60,8 @@ export default function LoginPage() {
     User
   </button>
 
+
+    
   <button
     type="button"
     onClick={() => setRole("owner")}
@@ -100,6 +102,14 @@ export default function LoginPage() {
           >
             Login
           </button>
+  
+          <p className="text-sm text-gray-400 text-center mt-4">
+            Don’t have an account?{" "}
+          <a href="/signup" className="text-blue-400 hover:underline">
+            Sign up
+          </a>
+          </p>
+          
 
         </form>
       </div>
