@@ -1,7 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { vehicles } from "@/lib/data";
 
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function VehiclesPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+
+  useEffect(() => {
+  if (status === "unauthenticated") {
+    router.push("/login");
+  }
+}, [status, router]);
+
+if (status === "loading") return <p>Loading...</p>;
+if (status === "unauthenticated") return null;
+
   return (
     <main className="p-6">
       <h1 className="text-3xl font-bold mb-6">Available Vehicles</h1>
