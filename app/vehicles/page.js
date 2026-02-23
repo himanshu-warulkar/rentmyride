@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import Link from "next/link";
@@ -24,40 +25,45 @@ if (status === "unauthenticated") return null;
   return (
     <main className="p-6">
       <h1 className="text-3xl font-bold mb-6">Available Vehicles</h1>
+=======
+import { prisma } from "@/lib/prisma"
+import Link from "next/link"
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {vehicles.map((v) => (
-          <Link
-            key={v.id}
-            href={`/vehicles/${v.id}`}
-            className="bg-white rounded shadow hover:shadow-lg transition block overflow-hidden"
-          >
-            <img
-              src={v.image}
-              alt={v.name}
-              className="w-full h-48 object-cover"
-            />
+export default async function VehiclesPage() {
+  const vehicles = await prisma.vehicle.findMany({
+    include: {
+      owner: true,
+    },
+  })
+>>>>>>> a175798 (THE NAVIGATION BAR)
 
-            <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                {v.name}
-              </h2>
-
-              <p className="text-sm text-gray-600">
-                {v.type} • {v.location}
-              </p>
-
-              <p className="text-blue-600 font-bold mt-1">
-                ₹{v.price}/day
-              </p>
-
-              <p className="mt-2 text-sm text-gray-500">
-                Click to view details →
-              </p>
-            </div>
-          </Link>
-        ))}
+  if (!vehicles || vehicles.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-400">
+        No vehicles available yet.
       </div>
-    </main>
-  );
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-3 gap-6 p-10">
+      {vehicles.map((vehicle) => (
+        <Link
+          key={vehicle.id}
+          href={`/vehicles/${vehicle.id}`}   // ✅ MUST use vehicle.id (UUID)
+        >
+          <div className="bg-slate-800 p-4 rounded-lg hover:bg-slate-700 transition cursor-pointer">
+            <img
+              src={vehicle.image}
+              alt={vehicle.title}
+              className="h-40 w-full object-cover rounded-md mb-3"
+            />
+            <h2 className="text-xl font-semibold">{vehicle.title}</h2>
+            <p className="text-gray-400">{vehicle.city}</p>
+            <p className="text-blue-400">₹{vehicle.price}/day</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )
 }
