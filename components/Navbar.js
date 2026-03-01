@@ -19,6 +19,9 @@ export default function Navbar() {
         <Link href="/vehicles" className="hover:text-blue-400 transition">
           Vehicles
         </Link>
+        <Link href="/about" className="hover:text-blue-400 transition">
+          About Us
+        </Link>
 
         {session ? (
           <>
